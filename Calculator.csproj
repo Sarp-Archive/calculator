@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>calc-icon.ico</ApplicationIcon>
+    <PlatformTarget>x64</PlatformTarget>
+    <Platforms>AnyCPU;x64</Platforms>
+    <Authors>Sarp Eren EGILMEZ</Authors>
+    <Company>Erentronik</Company>
+    <Description>A simple calculator on WPF</Description>
+    <PackageProjectUrl>https://www.sarpegilmez.com</PackageProjectUrl>
+    <PackageIcon>calc.ico</PackageIcon>
+    <RepositoryUrl>https://github.com/Segilmez06/calculator</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="calc-icon.ico" />
+  </ItemGroup>
+
+</Project>
