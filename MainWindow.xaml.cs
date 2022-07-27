@@ -76,6 +76,14 @@ namespace Calculator
                         break;
                 }
             }
+            else if (c == ',')
+            {
+                if (!char.IsDigit(equationBox.Text.Last()))
+                {
+                    equationBox.AppendText("0");
+                }
+                equationBox.AppendText(c.ToString());
+            }
             else
             {
                 if (newEquation)
@@ -99,7 +107,7 @@ namespace Calculator
                 string t = equation;
                 if (ops.Contains(t.Last()))
                 {
-                    t = t.Substring(0, t.Length - 2);
+                    t = t.Substring(0, t.Length - 1);
                 }
 
                 float num1 = 0, num2 = 1;
@@ -164,12 +172,11 @@ namespace Calculator
 
                     default:
                         return num1.ToString();
-                        break;
                 }
 
                 return result.ToString();
             }
-            return "Error";
+            return "";
         }
     
         void scrollEnd(TextBox t)
@@ -177,6 +184,77 @@ namespace Calculator
             t.CaretIndex = t.Text.Length;
             var rect = t.GetRectFromCharacterIndex(t.CaretIndex);
             t.ScrollToHorizontalOffset(rect.Right);
+        }
+
+        private void Clear_Click(object sender, RoutedEventArgs e)
+        {
+            newEquation = true;
+            equationBox.Text = "";
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            Dictionary<Key, string> keyDict = new Dictionary<Key, string>();
+            keyDict.Add(Key.D0, "0");
+            keyDict.Add(Key.D1, "1");
+            keyDict.Add(Key.D2, "2");
+            keyDict.Add(Key.D3, "3");
+            keyDict.Add(Key.D4, "4");
+            keyDict.Add(Key.D5, "5");
+            keyDict.Add(Key.D6, "6");
+            keyDict.Add(Key.D7, "7");
+            keyDict.Add(Key.D8, "8");
+            keyDict.Add(Key.D9, "9");
+
+            keyDict.Add(Key.NumPad0, "0");
+            keyDict.Add(Key.NumPad1, "1");
+            keyDict.Add(Key.NumPad2, "2");
+            keyDict.Add(Key.NumPad3, "3");
+            keyDict.Add(Key.NumPad4, "4");
+            keyDict.Add(Key.NumPad5, "5");
+            keyDict.Add(Key.NumPad6, "6");
+            keyDict.Add(Key.NumPad7, "7");
+            keyDict.Add(Key.NumPad8, "8");
+            keyDict.Add(Key.NumPad9, "9");
+
+            keyDict.Add(Key.OemComma, ",");
+            keyDict.Add(Key.OemPlus, "+");
+            keyDict.Add(Key.OemMinus, "-");
+            keyDict.Add(Key.Multiply, "*");
+            keyDict.Add(Key.Divide, "/");
+            keyDict.Add(Key.Enter, "=");
+            keyDict.Add(Key.Subtract, "-");
+            keyDict.Add(Key.Add, "+");
+            keyDict.Add(Key.Decimal, ",");
+
+            if (keyDict.ContainsKey(e.Key))
+            {
+                Button_Click(new Button() { Content = keyDict[e.Key] }, null);
+            }
+            else if (e.Key == Key.Delete || e.Key == Key.C)
+            {
+                Clear_Click(null, null);
+            }
+            else if (e.Key == Key.Back)
+            {
+                if (equationBox.Text.Length > 0)
+                {
+                    equationBox.Text = equationBox.Text.Substring(0, equationBox.Text.Length - 1);
+                }
+            }
+        }
+
+        private void equationBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            quickResult.Text = solveEquation(equationBox.Text);
+        }
+
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            if (equationBox.Text.Length > 0)
+            {
+                equationBox.Text = equationBox.Text.Substring(0, equationBox.Text.Length - 1);
+            }
         }
     }
 }
