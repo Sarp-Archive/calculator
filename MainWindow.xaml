@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Calculator"
         mc:Ignorable="d"
-        Title="Calculator" Background="Transparent" AllowsTransparency="True" SizeToContent="WidthAndHeight" WindowStyle="None" ResizeMode="NoResize">
+        Title="Calculator" Background="Transparent" AllowsTransparency="True" SizeToContent="WidthAndHeight" WindowStyle="None" ResizeMode="NoResize" KeyDown="Window_KeyDown">
 
     <Border BorderBrush="#FF1C2282"
              BorderThickness="1.5"
@@ -87,9 +87,70 @@
                 <ContentControl Content="{Binding CurrentPage}" />
             </DockPanel>
 
-            <Border CornerRadius="15" HorizontalAlignment="Center" Margin="0,0,0,270" VerticalAlignment="Center" Width="325" Height="75" Background="#FF7B7B7D">
-                <TextBox x:Name="equationBox" Background="Transparent" Foreground="White" FontSize="50" Text="" TextAlignment="Right" BorderBrush="Transparent" IsReadOnly="True" MaxLines="1"/>
+            <TextBox x:Name="quickResult" Background="Transparent" Foreground="White" FontSize="15" Text="" TextAlignment="Right" BorderBrush="Transparent" IsReadOnly="True" MaxLines="1" Margin="31,65,31,465" />
+
+            <Border CornerRadius="15" HorizontalAlignment="Center" Margin="0,0,0,300" VerticalAlignment="Center" Width="325" Height="75">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                                <RotateTransform Angle="225" CenterX="0.5" CenterY="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#FF308FAE"/>
+                        <GradientStop Color="#3071ae" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <!--Background="#FF7B7B7D"-->
+                <TextBox x:Name="equationBox" Background="Transparent" Foreground="White" FontSize="50" Text="" TextAlignment="Right" BorderBrush="Transparent" IsReadOnly="True" MaxLines="1" TextChanged="equationBox_TextChanged"/>
             </Border>
+
+            <Button VerticalAlignment="Top" HorizontalAlignment="Left" Content="Clear" Margin="31,177,0,0" Background="Transparent" Foreground="White" BorderBrush="Transparent" Click="Clear_Click" FontSize="15">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#00000000"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#00000000"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button VerticalAlignment="Top" HorizontalAlignment="Left" Content="" Margin="289,172,0,0" Background="Transparent" Foreground="White" BorderBrush="Transparent" Click="Back_Click" FontSize="30" FontFamily="Segoe Fluent Icons">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#00000000"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#00000000"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
 
             <Border CornerRadius="15" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75" Height="75" Background="#FF373737">
                 <Button x:Name="minus" Content="-" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="75" Height="75" Foreground="White" Background="#00000000" FontSize="30" BorderBrush="#00000000" Click="Button_Click">
